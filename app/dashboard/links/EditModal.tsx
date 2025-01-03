@@ -64,12 +64,13 @@ export function EditModal({
       return item;
     });
 
+    const status = new Date(newData.expiresAt) > new Date() ? "Active" : "Expired";
     setOpenEditModal({
       selectedUrl: {
         ...selectedUrl,
         expiresAt: newData.expiresAt,
         shortCode: newData.shortCode,
-        status: "Active", // to reset the status to active(because it might be expired)
+        status,
       },
       open: false,
     });
