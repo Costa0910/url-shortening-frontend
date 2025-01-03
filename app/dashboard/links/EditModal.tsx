@@ -69,6 +69,7 @@ export function EditModal({
         ...selectedUrl,
         expiresAt: newData.expiresAt,
         shortCode: newData.shortCode,
+        status: "Active", // to reset the status to active(because it might be expired)
       },
       open: false,
     });
