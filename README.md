@@ -29,6 +29,8 @@ The backend API is maintained in a separate repository and built with:
 - .NET 8
 - Entity Framework Core
 
+The backend repository can be found [here](https://github.com/Costa0910/URLShortening).
+
 ## Getting Started
 
 1. Clone the repository:
