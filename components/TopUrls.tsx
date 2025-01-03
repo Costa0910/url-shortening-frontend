@@ -6,16 +6,15 @@ import { Calendar, Copy, ExternalLink } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { format } from "date-fns";
 import { Skeleton } from "@/components/ui/skeleton"
-import Link from "next/link";
 import { BaseUrl } from "@/types/BaseUrl";
 
-export default function RecentUrls() {
+export default function TopUrls() {
   const [urls, setUrls] = useState<BaseUrl[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
 
   useEffect(() => {
-    const fetchRecentUrls = async () => {
+    const fetchTopUrls = async () => {
       try {
         debugger;
         const res = await fetch("/api/protected/dashboard");
@@ -36,7 +35,7 @@ export default function RecentUrls() {
       }
     };
 
-    fetchRecentUrls();
+    fetchTopUrls();
   }, [toast]);
 
   const handleCopy = async (shortUrl: string) => {
@@ -108,7 +107,7 @@ export default function RecentUrls() {
       ))}
       {urls.length === 0 && (
         <Card className="p-4">
-          <p className="text-center text-muted-foreground">No recent URLs</p>
+          <p className="text-center text-muted-foreground">No Top URLs</p>
         </Card>
       )}
     </div>

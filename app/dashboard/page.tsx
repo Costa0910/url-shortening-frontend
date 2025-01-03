@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import RecentUrls from "@/components/RecentUrls";
+import TopUrls from "@/components/TopUrls";
 import Link from "next/link";
 
 export default function Dashboard() {
@@ -44,7 +44,7 @@ export default function Dashboard() {
               <CardTitle>Top URLs</CardTitle>
             </CardHeader>
             <CardContent>
-                <RecentUrls />
+                <TopUrls />
             </CardContent>
             <CardFooter className="gap-2 justify-between">
               <p>
