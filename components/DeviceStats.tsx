@@ -43,6 +43,13 @@ export default function DeviceStats({
     0
   );
 
+  // reset
+  chartData.forEach(prevData => {
+    prevData.desktop = 0;
+    prevData.mobile = 0;
+    prevData.other = 0;
+  });
+
   deviceStatsData.forEach((data) => {
     if (data.key.toLocaleLowerCase() === "desktop") {
       chartData[0].desktop = data.count;
