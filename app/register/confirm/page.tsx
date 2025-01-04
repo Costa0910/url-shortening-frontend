@@ -1,4 +1,5 @@
 "use client";
+
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
@@ -23,26 +24,37 @@ type ConfirmFormData = z.infer<typeof ConfirmFormSchema>;
 export default function Confirm() {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
+  const [email, setEmail] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-
-  // Handle email verification on mount
-  useEffect(() => {
-    const userEmail = localStorage.getItem("temp");
-    if (!userEmail) {
-      router.push("/login");
-      return;
-    }
-  }, [router]);
 
   const form = useForm<ConfirmFormData>({
     resolver: zodResolver(ConfirmFormSchema),
     defaultValues: {
-      email: localStorage.getItem("temp") || "",
+      email: email || "",
       confirmationCode: "",
     },
   });
 
+  // Handle email retrieval from localStorage only on the client side
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const userEmail = localStorage.getItem("temp");
+      if (!userEmail) {
+        router.push("/login");
+        return;
+      }
+      setEmail(userEmail);
+    }
+  }, [router]);
+
+  useEffect(() => {
+    if (email) {
+      form.reset({ email, confirmationCode: "" });
+    }
+  }, [email, form]);
+
   const onSubmit = async (values: ConfirmFormData) => {
+    console.log(values);
     setError(null);
     setIsLoading(true);
 
@@ -59,12 +71,15 @@ export default function Confirm() {
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-10 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight">
-          Check your email for confirmation code
-        </h2>
+        <h1>Confirm your registration</h1>
+        {email ? (
+          <p>An email has been sent to {email}. Please check your inbox.</p>
+        ) : (
+          <p>Something went wrong. Please try again later.</p>
+        )}
         {error && (
           <p className="text-red-500 text-center mt-2 text-sm">{error}</p>
-        )}
+        )}{" "}
       </div>
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -88,11 +103,7 @@ export default function Confirm() {
               )}
             />
 
-            <Button 
-              type="submit" 
-              className="w-full"
-              disabled={isLoading}
-            >
+            <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading ? (
                 <BeatLoader size={8} color="#ff7c03" />
               ) : (
