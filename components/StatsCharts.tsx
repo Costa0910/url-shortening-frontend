@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import type { shortUrlStats } from "@/types/Stats";
-import ChartSkeleton from "./ChartSkeleton";
 import DeviceStats from "./DeviceStats";
 import TotalVisitors from "./TotalVisitors";
 import BrowserStats from "./BrowserStats";

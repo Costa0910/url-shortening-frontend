@@ -64,7 +64,7 @@ export function DeleteUrl({
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
             This action cannot be undone. This will permanently delete your
-            short url ({urlToDelete.shortCode}) and remove it's stats from our
+            short url ({urlToDelete.shortCode}) and remove it&apos;s stats from our
             server.
           </AlertDialogDescription>
         </AlertDialogHeader>

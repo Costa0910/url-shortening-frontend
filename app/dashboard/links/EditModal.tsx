@@ -133,7 +133,7 @@ export function EditModal({
         <SheetHeader>
           <SheetTitle>Edit URL</SheetTitle>
           <SheetDescription>
-            Make changes to your url here. Click save when you're done.
+            Make changes to your url here. Click save when you&apos;re done.
           </SheetDescription>
         </SheetHeader>
         {error && (
