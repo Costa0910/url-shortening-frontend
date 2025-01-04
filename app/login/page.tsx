@@ -1,5 +1,6 @@
 "use client";
-import { useState, useEffect } from "react";
+
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Auth from "@/components/Auth";
 import Image from "next/image";
@@ -10,14 +11,14 @@ import { apiFetch } from "@/utils/apiPost";
 
 type loginData = z.infer<typeof AuthFormSchema>;
 
-export default function Login() {
+function LoginContent() {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    const verified = searchParams.get('verified');
+    const verified = searchParams.get("verified");
     if (verified) {
       localStorage.removeItem("temp");
     }
@@ -38,7 +39,7 @@ export default function Login() {
   };
 
   return (
-    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+    <>
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <Link href="/">
           <Image
@@ -60,7 +61,7 @@ export default function Login() {
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <Auth btnText="Login" onSubmit={handleSubmit} isLoading={isLoading} />
         <p className="mt-10 text-center text-sm/6 text-gray-500">
-          Do not have account?{" "}
+          Do not have an account?{" "}
           <Link
             href="/register"
             className="font-semibold text-indigo-600 hover:text-indigo-500"
@@ -69,6 +70,16 @@ export default function Login() {
           </Link>
         </p>
       </div>
-    </div>
+    </>
+  );
+}
+
+export default function Login() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+        <LoginContent />
+      </div>
+    </Suspense>
   );
 }
