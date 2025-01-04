@@ -7,6 +7,7 @@ import DeviceStats from "./DeviceStats";
 import TotalVisitors from "./TotalVisitors";
 import BrowserStats from "./BrowserStats";
 import QuickStatCard from "./QuickStatCard";
+import QuickStatCardEmpty from "./QuickStatCardEmpty";
 import LocationStats from "./LocationStats";
 import OsStats from "./OsStats";
 import ReferrerStats from "./ReferrerStats";
@@ -56,14 +57,22 @@ export default function StatsCharts({
           title="Unique Visitors"
           value={stats.uniqueIPCount.toLocaleString()}
         />
-        <QuickStatCard
-          title="Last Device"
-          value={stats.lastAccessDevice.deviceType}
-        />
-        <QuickStatCard
-          title="Last Browser"
-          value={stats.lastAccessDevice.browser}
-        />
+        {stats.lastAccessDevice ? (
+          <QuickStatCard
+            title="Last Device"
+            value={stats.lastAccessDevice.deviceType}
+          />
+        ) : (
+          <QuickStatCardEmpty title="Last Device" />
+        )}
+        {stats.lastAccessDevice ? (
+          <QuickStatCard
+            title="Last Browser"
+            value={stats.lastAccessDevice.browser}
+          />
+        ) : (
+          <QuickStatCardEmpty title="Last Browser"/>
+        )}
       </div>
 
       {/* Charts Grid */}
